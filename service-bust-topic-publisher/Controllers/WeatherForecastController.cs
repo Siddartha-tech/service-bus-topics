@@ -47,6 +47,7 @@ public class WeatherForecastController : ControllerBase
         var sender = client.CreateSender("weather-forcast-added");
         string body = JsonSerializer.Serialize(message);
         ServiceBusMessage sbMessage = new ServiceBusMessage(body);
+        sbMessage.ApplicationProperties.Add("Month", data.Date.ToString("MMMM"));//Added custom property to message
         await sender.SendMessageAsync(sbMessage);
     }
 }
